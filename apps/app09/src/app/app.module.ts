@@ -5,20 +5,23 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from '@nx09/material';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { HomeComponent } from './home/home.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
+import { UiLoginModule } from '@nx09/ui-login';
+import { ProjectsComponent } from './projects/projects.component';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    ProjectsComponent
  ],
   imports: [
     AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    UiLoginModule
   ],
    providers: [],
   bootstrap: [AppComponent]
