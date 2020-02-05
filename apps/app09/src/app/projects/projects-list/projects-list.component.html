@@ -10,7 +10,25 @@
         (click)="selected.emit(project)">
         <h3 mat-line>{{ project.title }}</h3>
         <p mat-line>{{ project.details }}</p>
+
+        <div align="end">
+          <button
+            mat-icon-button
+            color="warn"
+            *ngIf="!readonly"
+            (click)="deleted.emit(project);$event.stopImmediatePropagation()">
+            <mat-icon>close</mat-icon>
+          </button>
+        </div>
+        <div align="end">
+          <button
+            mat-icon-button
+            (click)="$event.stopImmediatePropagation()"
+            [routerLink]="['/projects', project.id]">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </div>
       </mat-list-item>
     </mat-list>
   </mat-card-content>
- </mat-card>
+</mat-card>

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import { ProjectsService, Project } from '@nx09/core-data';
+import { NotificationsService } from '@nx09/ui-notifications';
 
 @Component({
   selector: 'nx09-projects',
@@ -12,11 +13,12 @@ export class ProjectsComponent implements OnInit {
   projects$;
   selectedProject: Project;
   form: FormGroup;
+  message: string;
 
   constructor(
     private projectsService: ProjectsService,
-    private formBuilder: FormBuilder
-
+    private formBuilder: FormBuilder,
+    private notifications: NotificationsService
   ) { }
 
   ngOnInit() {
@@ -26,7 +28,6 @@ export class ProjectsComponent implements OnInit {
 
   getProjects() {
     this.projects$ = this.projectsService.getProjects();
-console.log('getProjects', this.projects$)
   }
 
   selectProject(project: Project) {
@@ -55,7 +56,9 @@ console.log('getProjects', this.projects$)
       .subscribe(result => {
         this.getProjects();
         this.resetProject();
-      });
+    });
+    this.message = project.title + ' added.'
+    this.notifications.notification(this.message)
   }
 
   updateProject(project) {
@@ -64,6 +67,8 @@ console.log('getProjects', this.projects$)
         this.getProjects();
         this.resetProject();
       });
+    this.message = project.title + ' updated.'
+    this.notifications.notification(this.message)
   }
 
   resetProject() {
@@ -78,6 +83,13 @@ console.log('getProjects', this.projects$)
 
   cancel () {
     this.resetProject();
+  }
+
+  deleteProject(project) {
+    this.projectsService.deleteProject(project.id)
+      .subscribe(result => this.getProjects());
+    this.message = project.title + ' deleted.'
+    this.notifications.notification(this.message)
   }
 
 }
