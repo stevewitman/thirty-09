@@ -1,1 +1,11 @@
-<p>Projects Component</p>
+<div class="row">
+  <div class="column">
+    <nx09-projects-list
+    [projects]="projects$ | async"
+    (selected)=selectProject($event)>
+  </nx09-projects-list>
+  </div>
+  <div class="column">
+    <nx09-project-detail [project]="selectedProject"></nx09-project-detail>
+  </div>
+</div>
