@@ -1,8 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HttpClientModule } from '@angular/common/http';
- import { ReactiveFormsModule } from '@angular/forms';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
 import { MaterialModule } from '@nx09/material';
 import { AppRoutingModule } from './app-routing.module';
@@ -13,6 +13,7 @@ import { ProjectsComponent } from './projects/projects.component';
 import { ProjectsListComponent } from './projects/projects-list/projects-list.component';
 import { ProjectDetailComponent } from './projects/project-detail/project-detail.component';
 import { ProjectComponent } from './projects/project/project.component';
+import { AuthModule } from '@nx09/auth';
 
 @NgModule({
   declarations: [
@@ -30,9 +31,16 @@ import { ProjectComponent } from './projects/project/project.component';
     MaterialModule,
     UiLoginModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    AuthModule
   ],
-   providers: [],
+  // providers: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: AuthInterceptor,
+  //     multi: true
+  //   }
+  // ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -40,6 +40,7 @@
     "@angular/platform-browser-dynamic": "^8.2.0",
     "@angular/router": "^8.2.0",
     "@nrwl/angular": "8.12.2",
+    "angular2-jwt": "^0.2.3",
     "core-js": "^2.5.4",
     "rxjs": "~6.4.0",
     "zone.js": "^0.9.1"

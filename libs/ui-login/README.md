@@ -1,7 +1,2 @@
-# ui-login
-
-This library was generated with [Nx](https://nx.dev).
-
-## Running unit tests
-
-Run `nx test ui-login` to execute the unit tests.
+Mock Auth partially based on this blog article
+https://ryanchenkie.com/angular-authentication-using-the-http-client-and-http-interceptors

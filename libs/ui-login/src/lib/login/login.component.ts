@@ -1,23 +1,41 @@
-import { Component, OnInit } from '@angular/core';
- import { Router } from '@angular/router';
- import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { AuthService } from '@nx09/auth';
 
  @Component({
    selector: 'ui-login',
    templateUrl: './login.component.html',
    styleUrls: ['./login.component.scss']
  })
- export class LoginComponent implements OnInit {
+ export class LoginComponent implements OnInit, OnDestroy {
 
-   form: FormGroup;
+  destroy$: Subject<boolean> = new Subject();
+
+  form: FormGroup;
+
+  get email() {
+    return this.form.get('email')
+  }
+  get password() {
+    return this.form.get('password')
+  }
 
    constructor(
      private router: Router,
-     private formBuilder: FormBuilder
+     private formBuilder: FormBuilder,
+     private service: AuthService
    ) { }
 
    ngOnInit() {
      this.initForm();
+   }
+
+   ngOnDestroy() {
+     this.destroy$.next(true);
+     this.destroy$.unsubscribe();
    }
 
    private initForm() {
@@ -33,16 +51,14 @@ import { Component, OnInit } from '@angular/core';
      })
    }
 
-   get email() {
-     return this.form.get('email')
-   }
-   get password() {
-     return this.form.get('password')
-   }
-
    onSubmit() {
      if (this.form.invalid) return;
-     this.router.navigate(['/projects']);
+    this.service.authenticate(this.form.value).pipe(
+      takeUntil(this.destroy$)
+    ).subscribe(({access_token}) => {
+      localStorage.setItem('token', access_token);
+      this.router.navigate(['/projects']);
+    })
    }
 
  }

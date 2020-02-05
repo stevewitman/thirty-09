@@ -29,6 +29,9 @@
     },
     "ui-notifications": {
       "tags": []
+    },
+    "auth": {
+      "tags": []
     }
   }
 }
