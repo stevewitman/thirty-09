@@ -1,4 +1,5 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'nx09-project-detail',
@@ -8,6 +9,10 @@ import { Component, OnInit, Input } from '@angular/core';
 export class ProjectDetailComponent implements OnInit {
   currentProject;
   originalTitle;
+
+  @Input() form: FormGroup;
+  @Output() saved = new EventEmitter();
+  @Output() cancelled = new EventEmitter();
   @Input() set project(value) {
     if (value) this.originalTitle = value.title;
     this.currentProject = Object.assign({}, value);
@@ -16,6 +21,14 @@ export class ProjectDetailComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
+  }
+
+  onSubmit() {
+    this.saved.emit(this.form.value);
+  }
+
+  onClear() {
+    this.cancelled.emit(this.currentProject);
   }
 
 }
